@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { mockData } from '../data/mockData';
 import { TaskBrief } from '../components/challenge/TaskBrief';
+import { SmartLinkedInBuilder } from '../components/challenge/SmartLinkedInBuilder';
 import { SubmissionForm } from '../components/challenge/SubmissionForm';
 import { Button } from '../components/ui/Button';
 
@@ -32,6 +33,7 @@ export default function ChallengeDayPage() {
       </div>
       
       <TaskBrief challenge={challenge} />
+      <SmartLinkedInBuilder template={challenge.linkedinTemplate} />
       <SubmissionForm />
     </div>
   );
