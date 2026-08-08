@@ -200,3 +200,99 @@ When completed:
 - **Tokens Established:** [Confirmed semantic tokens]
 - **Build Status:** [Pass / Fail]
 - **Git Status Output:** [Exact `git status` text]
+
+
+
+### Chapter 2: Mock Data Architecture & Core UI Components
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 2: Mock Data Architecture & Core UI Components**.
+**Strict Rules:** Do NOT build the final product pages (`/`, `/dashboard`, `/day/:2`), do NOT install new dependencies (no `clsx`, no `classnames`), do NOT modify Tailwind configuration, and do NOT run any destructive Git commands (no commit, no push). The user will handle Git operations manually.
+
+Your goal is to build a structured mock JSON data file to serve as our "database", build our foundational reusable UI components (`Button`, `Card`, `Badge`) using the design tokens from Chapter 1, and update the `/style-guide` sandbox to test these new components with the mock data.
+
+---
+
+### Step 1: Project Inspection & Safety Check
+
+1. Inspect `src/index.css` to review the semantic design tokens (e.g., `--bg-surface`, `--accent-primary`) created in Chapter 1.
+2. Ensure you use native template literals for component class merging. Do not add external utility libraries.
+
+---
+
+### Step 2: Mock Data Architecture
+
+Create a new file `src/data/mockData.js` and export a structured JavaScript object simulating the application state.
+
+* **User Object:**
+```javascript
+user: {
+  name: "Rahul Sharma",
+  avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=Rahul",
+  joinDate: "2024-09-01",
+  currentStreak: 3,
+  bestStreak: 12,
+  status: "active" // Can be "first-day", "missed-yesterday", "active"
+}
+
+```
+
+
+* **Challenges Array:** Create an array of 60 objects representing the 60-day challenge.
+* Include fields: `day` (integer), `title`, `description`, `status` (`"completed"`, `"missed"`, `"pending"`, `"locked"`), `githubUrl`, and `linkedinUrl`.
+* **Crucial Plus-One Feature Field:** Add a `linkedinTemplate` string field to every challenge containing a pre-written, professional template the student can use.
+* *Data Population Strategy:* Fully detail Days 1 through 5 (Day 1-3 completed, Day 4 missed, Day 5 pending). The remaining Days 6-60 can be programmatically generated or mapped as basic `"locked"` state objects to keep the file size reasonable.
+
+
+
+---
+
+### Step 3: Build Core UI Components
+
+Create a `src/components/ui/` folder and implement the following reusable atomic components. They must consume the CSS variables defined in Chapter 1 (e.g., using Tailwind arbitrary values like `bg-[var(--bg-surface)]` or mapped theme variables depending on Chapter 1's exact implementation).
+
+1. **`Button.jsx`**
+* Props: `variant` (`primary`, `secondary`, `outline`, `ghost`), `size`, `children`, `className`, standard button attributes.
+* Styling: Must have a minimum height of **44px** for mobile touch targets. Include clear focus rings (`focus-visible:ring-2`) and hover states using our token variables.
+* Use `rounded-xl` or `rounded-2xl` based on the visual direction.
+
+
+2. **`Card.jsx`**
+* Props: `children`, `className`.
+* Styling: Use the `--bg-surface` background, `--border-subtle` for borders, and `rounded-2xl` or `rounded-3xl` radii. Do not use heavy drop shadows.
+
+
+3. **`Badge.jsx`**
+* Props: `variant` (`success`, `warning`, `neutral`), `children`, `className`.
+* Styling: A small pill shape (`rounded-full`) for statuses. Use `--status-success` colors for the success variant, etc.
+
+
+
+---
+
+### Step 4: Update the Style Guide Sandbox
+
+Modify `src/pages/StyleGuideSandbox.jsx` to replace the hardcoded atomic elements with these new reusable components.
+
+1. Import `Button`, `Card`, and `Badge`.
+2. Import `mockData` from `src/data/mockData.js`.
+3. Render a "Today's Task" Card in the sandbox by mapping the `pending` challenge (Day 5) from the mock data into the new UI components. Display the `title`, `description`, and a `Button` to act as the primary CTA.
+4. Render a few `Badge` components showcasing the different statuses.
+5. Ensure the layout remains optimized for a 390px mobile viewport and responds instantly to the Light/Dark theme toggle.
+
+---
+
+### Step 5: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. The `/style-guide` route correctly displays the mock data inside the new reusable components.
+3. Light and Dark modes continue to function flawlessly, proving the components are properly wired to the Chapter 1 CSS variables.
+4. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the created and modified files.
+2. Provide a concise summary containing:
+* **Files Created/Modified:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]
