@@ -296,3 +296,101 @@ When completed:
 * **Files Created/Modified:** [List files]
 * **Build Status:** [Pass / Fail]
 * **Git Status Output:** [Exact `git status` text]
+
+
+
+### Chapter 3: Permanent Layout Shell & Landing Page (`/`)
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 3: Permanent Layout Shell & Landing Page (`/`)**.
+**Strict Rules:** Do NOT build the final Dashboard (`/dashboard`) or Challenge Day (`/day/:dayId`) pages yet. Do NOT install new dependencies. Do NOT modify the Tailwind configuration. Do NOT run any destructive Git commands (no commit, no push).
+
+Your goal is to replace the temporary routing header with a permanent Application Layout (Navbar, Footer, AppLayout) and build the complete, mobile-first Landing Page utilizing the `Button`, `Card`, and `Badge` components created in Chapter 2 and the CSS tokens from Chapter 1.
+
+---
+
+### Step 1: Create the Permanent Layout Shell
+
+Create a new folder `src/components/layout/` and build the following components:
+
+1. **`Navbar.jsx`**:
+* A polished top navigation bar.
+* Include a text-based logo ("ABTalks") that links to `/`.
+* Include the Light/Dark Theme Toggle button on the right side.
+* Style: Use `--bg-app` or a slightly translucent background with a `--border-subtle` bottom border. Ensure a minimum 44px height.
+
+
+2. **`Footer.jsx`**:
+* A minimal footer (e.g., "© 2026 ABTalks. Build consistently.").
+* Style: Use `--text-muted` and center the text with generous top and bottom padding.
+
+
+3. **`AppLayout.jsx`**:
+* A wrapper component that accepts `children` or uses React Router's `<Outlet/>`.
+* Structure: `<Navbar/>` -> `<main>` (content) -> `<Footer/>`.
+* Desktop formatting: Ensure the `<main>` content area doesn't stretch infinitely on wide screens (e.g., use `max-w-5xl mx-auto w-full`).
+
+
+
+---
+
+### Step 2: Update App Routing (`App.jsx`)
+
+1. Remove the temporary `HeaderNav.jsx` component completely from the project.
+2. Wrap all routes in `App.jsx` with the new `AppLayout` component so the Navbar and Footer persist across all pages.
+
+---
+
+### Step 3: Build the Landing Page (`src/pages/LandingPage.jsx`)
+
+Replace the temporary Landing Page shell with the final product landing page. The design must be mobile-first (390px) and expand cleanly for desktop. Use native Tailwind transitions for hover effects; do NOT add animation libraries.
+
+**Section 1: Hero**
+
+* **Content:** A strong, motivating headline (e.g., "Code Every Day. Get Noticed."). A subheadline addressing the college student (e.g., "The 60-day challenge that turns tired students into hired developers.").
+* **Action:** A massive primary `Button` component ("Start the 60-Day Challenge") that wraps a React Router `<Link to="/dashboard">`.
+* **Styling:** Center-aligned, generous padding (`py-16` or `py-24`), utilizing `--text-primary` and `--text-secondary`.
+
+**Section 2: How It Works**
+
+* **Layout:** Stacked single column on mobile (390px), 3-column grid on desktop (`md:grid-cols-3`).
+* **Cards:** Use the `Card` component for three steps:
+1. *Build:* "Get a daily task."
+2. *Post:* "Submit your GitHub & LinkedIn proof."
+3. *Get Noticed:* "Build a 60-day streak recruiters can't ignore."
+
+
+* **Styling:** Use `--bg-surface`. Keep icons/numbers simple (use native text or simple SVG shapes, no heavy libraries).
+
+**Section 3: Value/Reward & Final CTA**
+
+* **Content:** A brief reminder of the value of consistency.
+* **Action:** A secondary CTA `Button` ("View Dashboard") linking to `/dashboard`.
+* **Styling:** A slightly elevated section or distinct background using `--bg-surface-elevated` with rounded corners.
+
+---
+
+### Step 4: Component & Design Token Enforcement
+
+* **MUST** use the `Button`, `Card`, and `Badge` components from `src/components/ui/` instead of raw HTML buttons/divs where applicable.
+* **MUST** rely strictly on the CSS variables defined in `index.css` (e.g., `text-[var(--text-primary)]`, `bg-[var(--bg-app)]` if not mapped globally, though native Tailwind mapped classes are preferred if you set them up that way).
+* Ensure text contrast and readability remain excellent in both Light and Dark modes.
+
+---
+
+### Step 5: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. Navigating to `/` displays the polished Landing Page.
+3. The Navbar and Footer are visible on `/`, `/dashboard`, and `/day/2`.
+4. Clicking the Hero CTA instantly navigates to `/dashboard`.
+5. The layout looks excellent at 390px (no horizontal scrolling) and expands intelligently on desktop.
+6. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the created and modified files.
+2. Provide a concise summary containing:
+* **Files Created/Modified/Deleted:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]
