@@ -20,17 +20,17 @@ export default function DashboardPage() {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 md:items-start">
         {/* Left Column: Stats & Action */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 h-full">
+        <div className="md:col-span-5 flex flex-col gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6 h-full">
             <StreakCard user={user} />
             <TodayTaskCard challenges={challenges} />
           </div>
         </div>
 
         {/* Right Column: Grid */}
-        <div className="lg:col-span-8">
+        <div className="md:col-span-7">
           <ProgressGrid challenges={challenges} />
         </div>
       </div>

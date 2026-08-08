@@ -8,7 +8,7 @@ export function Input({ label, id, helperText, className = '', ...props }) {
       )}
       <input
         id={id}
-        className="w-full h-11 px-4 rounded-xl border border-border-strong bg-bg-app text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-focus-ring focus:border-focus-ring transition-shadow text-base"
+        className="w-full h-11 px-4 rounded-xl border border-border-strong bg-bg-app text-text-primary placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-app transition-shadow text-base"
         {...props}
       />
       {helperText && (

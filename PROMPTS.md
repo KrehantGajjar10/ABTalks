@@ -771,3 +771,62 @@ When completed:
 * **Files Created/Modified:** [List files]
 * **Build Status:** [Pass / Fail]
 * **Git Status Output:** [Exact `git status` text]
+
+
+
+### Chapter 8: Responsive Polish & Accessibility
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 8: Responsive Polish & Accessibility**.
+**Strict Rules:** Do NOT alter the core design tokens from Chapter 1. Do NOT break the existing 390px mobile layouts. Do NOT install external animation or charting libraries. Do NOT run any destructive Git commands (no commit, no push).
+
+Your goal is to elevate the UI to a premium level. You will implement a 2-column desktop layout for the Dashboard, enforce strict accessibility (keyboard focus states and ARIA labels), and add fluid CSS transitions for theme toggling.
+
+---
+
+### Step 1: Desktop Layout for Dashboard (`DashboardPage.jsx`)
+
+Update `src/pages/DashboardPage.jsx` to implement a responsive 2-column layout on desktop while preserving the stacked layout on mobile.
+
+* **Container Layout:** Change the main content wrapper to a CSS Grid on medium/large screens (e.g., `flex flex-col gap-6 md:grid md:grid-cols-12 md:gap-8 md:items-start`).
+* **Left Column (Cards):** Wrap the `StreakCard` and `TodayTaskCard` in a `div` that spans 5 columns on desktop (`md:col-span-5 flex flex-col gap-6`).
+* **Right Column (Progress Grid):** Place the `ProgressGrid` in a `div` that spans 7 columns on desktop (`md:col-span-7`).
+* **Note:** The `StateSwitcher` should remain at the very bottom, spanning full width (`md:col-span-12`).
+
+### Step 2: AppLayout Constraints & Scaling (`AppLayout.jsx`, `LandingPage.jsx`, `ChallengeDayPage.jsx`)
+
+1. **`AppLayout.jsx`**: Ensure the `<main>` container uses `max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8` so the app is elegantly constrained on large monitors and doesn't stretch infinitely.
+2. **`LandingPage.jsx`**: Upgrade typography to scale up on desktop. For example, make the Hero H1 `text-4xl md:text-5xl lg:text-6xl`. Ensure desktop padding is generous (`py-16 md:py-24`).
+3. **`ChallengeDayPage.jsx`**: Ensure the form and brief don't stretch too wide on desktop (e.g., constrain their wrappers to `max-w-2xl mx-auto`).
+
+### Step 3: Accessibility (a11y) & Focus States
+
+Audit and update all interactive components to ensure flawless keyboard navigation.
+
+1. **`Button.jsx`, `Input.jsx`, & `ThemeToggle**`: Add strict focus classes: `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-primary)]` (or use your equivalent design token) to all interactive elements. Ensure ring offsets match the `--bg-app` or `--bg-surface` color contextually if possible, or use transparent offsets.
+2. **`ProgressGrid.jsx`**: Ensure the interactive `<Link>` cells have explicit focus states so users can `Tab` through their history.
+3. **ARIA Labels:** Ensure the Theme Toggle button has `aria-label="Toggle Dark Mode"`. Ensure any icon-only elements have screen-reader-only text (`sr-only`) or `aria-label`.
+
+### Step 4: Smooth Theme Transitions
+
+1. Update `src/index.css` (or apply utility classes to the root `AppLayout`) to ensure the transition between Light and Dark mode feels fluid.
+2. Apply native CSS transitions to backgrounds and text: e.g., `* { transition-property: color, background-color, border-color; transition-duration: 200ms; transition-timing-function: ease-in-out; }` (Implement this safely so it doesn't cause performance lag on standard DOM paints, typically by targeting `body`, `#root`, cards, and text explicitly rather than the universal `*` selector if possible).
+
+---
+
+### Step 5: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. **Desktop Check:** The Dashboard displays the left/right 2-column layout correctly on a wide screen, constrained nicely within the `max-w-5xl` container.
+3. **Mobile Check:** The Dashboard remains perfectly stacked at 390px width with no horizontal overflow.
+4. **Keyboard Test:** Pressing `Tab` repeatedly cycles through every button, link, and input, highlighting them with a clear, accessible focus ring.
+5. **Theme Check:** Toggling the theme creates a smooth, 200ms crossfade of colors rather than a jarring instant flash.
+6. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the modified files.
+2. Provide a concise summary containing:
+* **Files Modified:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]

@@ -4,7 +4,7 @@ import { Card } from '../components/ui/Card';
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col gap-16 md:gap-24 py-8 md:py-16 px-4">
+    <div className="flex flex-col gap-16 md:gap-24 py-16 md:py-24 px-4">
       {/* Section 1: Hero */}
       <section className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto mt-8 md:mt-12">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-text-primary">

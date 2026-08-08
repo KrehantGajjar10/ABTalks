@@ -5,7 +5,7 @@ export function Button({
   className = '', 
   ...props 
 }) {
-  const baseClasses = "inline-flex items-center justify-center rounded-xl font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-surface";
+  const baseClasses = "inline-flex items-center justify-center rounded-xl font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface";
   
   const sizeClasses = {
     sm: "h-9 px-3 text-sm",

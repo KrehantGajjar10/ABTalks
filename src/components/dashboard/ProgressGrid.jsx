@@ -46,7 +46,7 @@ export function ProgressGrid({ challenges }) {
             <Link 
               key={challenge.day} 
               to={`/day/${challenge.day}`}
-              className={`${cellClasses} hover:scale-110 hover:shadow-md hover:z-10 focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-surface cursor-pointer`}
+              className={`${cellClasses} hover:scale-110 hover:shadow-md hover:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface cursor-pointer`}
               aria-label={ariaLabel}
               title={ariaLabel}
             >

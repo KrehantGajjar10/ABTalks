@@ -22,7 +22,7 @@ export default function ChallengeDayPage() {
   }
 
   return (
-    <div className="py-6 px-4 md:py-10 max-w-3xl mx-auto w-full flex flex-col gap-6 md:gap-8">
+    <div className="py-6 px-4 md:py-10 max-w-2xl mx-auto w-full flex flex-col gap-6 md:gap-8">
       <div>
         <Link 
           to="/dashboard" 
