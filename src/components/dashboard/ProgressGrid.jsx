@@ -15,12 +15,12 @@ export function ProgressGrid({ challenges }) {
         {challenges.map((challenge) => {
           const isLocked = challenge.status === 'locked';
           
-          let cellClasses = "w-full aspect-square rounded-sm sm:rounded-md flex items-center justify-center text-[10px] sm:text-xs font-bold transition-all ";
+          let cellClasses = "w-full aspect-square rounded-sm sm:rounded-md flex items-center justify-center text-[10px] sm:text-xs font-bold motion-safe:transition-all motion-safe:duration-200 ";
           
           if (challenge.status === 'completed') {
             cellClasses += "bg-status-success text-white";
           } else if (challenge.status === 'missed') {
-            cellClasses += "bg-status-error/80 text-white";
+            cellClasses += "bg-status-warning text-white";
           } else if (challenge.status === 'pending') {
             cellClasses += "border-2 border-accent-primary bg-bg-app text-text-primary shadow-[0_0_0_2px_var(--accent-primary)] z-10 scale-110";
           } else if (isLocked) {
@@ -59,7 +59,7 @@ export function ProgressGrid({ challenges }) {
       <div className="flex flex-wrap items-center justify-center gap-4 mt-6 pt-4 border-t border-border-subtle text-xs text-text-muted">
         <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-status-success"></div> Completed</div>
         <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm border-2 border-accent-primary"></div> Pending</div>
-        <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-status-error/80"></div> Missed</div>
+        <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-status-warning"></div> Missed</div>
         <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-bg-surface-elevated border border-border-subtle"></div> Locked</div>
       </div>
     </Card>

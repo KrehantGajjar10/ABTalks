@@ -61,7 +61,7 @@ export default function LandingPage() {
           Don't wait until graduation to build your portfolio. Start today and let your daily effort compound into career opportunities.
         </p>
         <Link to="/dashboard" tabIndex={-1}>
-          <Button variant="secondary" size="md">
+          <Button variant="primary" size="md">
             View Dashboard
           </Button>
         </Link>

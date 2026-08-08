@@ -830,3 +830,93 @@ When completed:
 * **Files Modified:** [List files]
 * **Build Status:** [Pass / Fail]
 * **Git Status Output:** [Exact `git status` text]
+
+
+
+### Chapter 9: Final Polish & QA
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are in the **Chapter 9: Final Polish & QA** phase.
+Your goal is to execute UI/UX polish across navigation, a premium neutral base with a controlled colorful accent system, native CSS micro-interactions, and a specific button styling fix on the Landing Page.
+
+**Strict Boundaries:**
+
+* Do NOT add new features, change mock data, or change routing architecture.
+* Do NOT install dependencies or modify Tailwind configuration.
+* Do NOT break the existing 390px mobile layout or desktop constraints.
+* Do NOT remove the Judge Tools.
+* Do NOT rewrite working functionality.
+* Preserve accessibility and visible keyboard focus states.
+* Do NOT run any Git commands except `git status` at the very end (No commit, no push).
+
+---
+
+### Step 1: Navigation Fix (`Navbar.jsx`)
+
+* Update `src/components/layout/Navbar.jsx`.
+* Wrap the "ABTalks" brand/logo text in a React Router `<Link to="/">` to provide a globally accessible "Back to Home" route. Ensure it has clear focus states (`focus-visible:ring-2`).
+
+---
+
+### Step 2: The 80/20 Visual Redesign (Monochrome Base + Colorful Accents)
+
+Update the CSS variables in `src/index.css`. The UI must maintain an 80-90% neutral foundation, introducing a carefully controlled 10-20% colorful accent system. **Do not use pure `#000000` or `#FFFFFF` as large backgrounds.** Do not scatter raw hex colors throughout JSX.
+
+* **1. Neutral Foundation (80-90% of UI):**
+* **Light Mode:** Soft off-white backgrounds (`--bg-app`: e.g., `#F4F4F5` or `#F9FAFB`), slightly elevated surfaces (`--bg-surface`: e.g., `#FCFCFC`), deep charcoal text (`--text-primary`: `#18181B`), medium gray text (`--text-secondary`: `#52525B`), soft gray borders (`--border-subtle`: `#E4E4E7`).
+* **Dark Mode:** Deep charcoal/zinc backgrounds (`--bg-app`: e.g., `#09090B`), elevated charcoal surfaces (`--bg-surface`: `#18181B`), soft off-white text (`--text-primary`: `#FAFAFA`), muted gray text (`--text-secondary`: `#A1A1AA`), dark gray borders (`--border-subtle`: `#27272A`).
+
+
+* **2. Controlled Colorful Accents (10-20% of UI):**
+* `--accent-primary` (Indigo/Violet): Use for primary CTAs, links, and selected states. Must have excellent contrast.
+* `--status-success` (Emerald): Use for completed challenges, streak success, and positive feedback.
+* `--status-warning` (Amber): Use for missed-day states and warnings.
+* `--status-error` (Red): Use only for actual errors.
+* `--accent-special` (Violet): Introduce this token subtly for the Smart LinkedIn Builder so it feels distinct.
+
+
+
+---
+
+### Step 3: Component Application & CTA Fix
+
+Apply these design tokens consistently across the application:
+
+* **Dashboard (`DashboardPage.jsx` & components):** Cards remain predominantly neutral. Streak/Completed cells use emerald. Missed cells use amber. Pending/current day cells use the primary indigo/violet accent. Locked days remain neutral gray.
+* **Challenge Day (`ChallengeDayPage.jsx` & components):** Task Brief is neutral. Smart LinkedIn Builder uses the `--accent-special` violet accent/border. Submit button uses primary indigo. Success state uses emerald.
+* **Buttons (`Button.jsx`):** Primary buttons use the accent color. Secondary/Outline/Ghost buttons remain neutral with subtle accent hovers.
+* **Landing Page CTA Fix (`LandingPage.jsx`):**
+* I need ONE very specific CSS-only change here. Make the secondary "View Dashboard" button visually EXACTLY match the "Start the 60-Day Challenge" button (background, text color, border, hover state, active state, focus-visible state, and transitions).
+* *CRITICAL RULE FOR THIS FIX:* Do NOT change the "View Dashboard" button's size, padding, width, height, font size, font weight, position, layout, or text. Only copy/adapt the existing visual CSS colors/styling from the primary button to the secondary one.
+
+
+
+---
+
+### Step 4: UX Polish & Animations (Native CSS Only)
+
+Implement subtle, premium micro-interactions. Use `motion-safe:` prefixes or CSS media queries to respect `prefers-reduced-motion`.
+
+1. **Global Page Entrance:** Add a keyframe in `index.css` for a subtle fade-in-up effect (e.g., opacity 0 to 1, translate Y from 10px to 0 over 400ms). Apply this to `<main>` in `AppLayout.jsx` or page wrappers.
+2. **Button Interactions:** Add `motion-safe:transition-all motion-safe:duration-200` and a subtle press-down effect (`active:scale-[0.98]`).
+3. **Card Interactions:** Add a very subtle hover lift or border highlight (`hover:border-[var(--border-strong)]`) for interactive cards, keeping it understated.
+4. **Grid Interactions (`ProgressGrid.jsx`):** Ensure interactive cells have a smooth hover scale (`hover:scale-110 hover:z-10`).
+5. **Clipboard Feedback:** Ensure the "Copied!" feedback transition on the Smart LinkedIn Builder feels smooth.
+
+---
+
+### Step 5: Final Validation & Output
+
+1. Check the 390px mobile layout across `/`, `/dashboard`, and `/day/2` to ensure zero horizontal overflow and no broken components.
+2. Verify `focus-visible` rings remain highly visible against the new neutral backgrounds.
+3. Execute `npm run build` to ensure the build completes with zero errors.
+4. Execute `git status`.
+
+**Output Requirements:**
+Provide a concise summary:
+
+* **Files Modified:** [List files]
+* **Design System Summary:** [Briefly explain the implemented neutral/accent token structure]
+* **Landing Page Fix:** [Confirm exactly which classes were updated on the View Dashboard button]
+* **Build Status:** [Pass / Fail output of `npm run build`]
+* **Git Status Output:** [Exact `git status` text]

@@ -1,20 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --bg-app: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-surface-elevated: #F1F5F9;
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --border-subtle: #E2E8F0;
-  --border-strong: #CBD5E1;
+  --bg-app: #F4F4F5;
+  --bg-surface: #FAFAFA;
+  --bg-surface-elevated: #E4E4E7;
+  --text-primary: #18181B;
+  --text-secondary: #52525B;
+  --text-muted: #71717A;
+  --border-subtle: #E4E4E7;
+  --border-strong: #D4D4D8;
+  
   --accent-primary: #4F46E5;
-  --accent-hover: #4338ca;
+  --accent-hover: #4338CA;
+  --accent-special: #8B5CF6;
+  --link-color: #2563EB;
+  
   --status-success: #059669;
   --status-warning: #D97706;
   --status-error: #E11D48;
-  --focus-ring: #6366F1;
+  --focus-ring: #4F46E5;
 }
 
 body, #root, div, span, p, h1, h2, h3, h4, h5, h6, a, button, input, header, footer, section, main, nav, svg {
@@ -24,16 +28,20 @@ body, #root, div, span, p, h1, h2, h3, h4, h5, h6, a, button, input, header, foo
 }
 
 .dark {
-  --bg-app: #0F172A;
-  --bg-surface: #1E293B;
-  --bg-surface-elevated: #334155;
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --border-subtle: #334155;
-  --border-strong: #475569;
+  --bg-app: #09090B;
+  --bg-surface: #18181B;
+  --bg-surface-elevated: #27272A;
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  --border-subtle: #27272A;
+  --border-strong: #3F3F46;
+  
   --accent-primary: #6366F1;
-  --accent-hover: #818cf8;
+  --accent-hover: #818CF8;
+  --accent-special: #A78BFA;
+  --link-color: #60A5FA;
+  
   --status-success: #10B981;
   --status-warning: #F59E0B;
   --status-error: #F43F5E;
@@ -49,10 +57,30 @@ body, #root, div, span, p, h1, h2, h3, h4, h5, h6, a, button, input, header, foo
   --color-text-muted: var(--text-muted);
   --color-border-subtle: var(--border-subtle);
   --color-border-strong: var(--border-strong);
+  
   --color-accent-primary: var(--accent-primary);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-special: var(--accent-special);
+  --color-link-color: var(--link-color);
+  
   --color-status-success: var(--status-success);
   --color-status-warning: var(--status-warning);
   --color-status-error: var(--status-error);
   --color-focus-ring: var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 400ms ease-out forwards;
+  }
 }

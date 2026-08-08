@@ -23,7 +23,7 @@ export function TodayTaskCard({ challenges }) {
   const isCompleted = challenge.status === 'completed';
 
   return (
-    <Card className="flex flex-col justify-between p-6 h-full border-border-strong">
+    <Card className="flex flex-col justify-between p-6 h-full motion-safe:transition-all motion-safe:duration-300 hover:border-border-strong">
       <div>
         <div className="flex justify-between items-start mb-4">
           <Badge variant="neutral">Day {challenge.day}</Badge>

@@ -24,7 +24,7 @@ export function SmartLinkedInBuilder({ template }) {
   };
 
   return (
-    <Card className="p-6 md:p-8 border-border-subtle bg-bg-surface-elevated">
+    <Card className="p-6 md:p-8 border border-accent-special/30 bg-bg-surface-elevated">
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-1">
           <svg className="w-5 h-5 text-accent-primary" fill="currentColor" viewBox="0 0 24 24">
