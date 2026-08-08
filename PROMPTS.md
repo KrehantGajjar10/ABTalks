@@ -603,3 +603,78 @@ When completed:
 * **Build Status:** [Pass / Fail]
 * **Git Status Output:** [Exact `git status` text]
 
+
+
+### Chapter 6: The Plus-One Feature (Smart LinkedIn Builder)
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 6: The Plus-One Feature (Smart LinkedIn Builder)**.
+**Strict Rules:** Do NOT integrate real AI APIs (OpenAI, Gemini, etc.). Do NOT install "copy-to-clipboard" npm packages. Do NOT modify the Tailwind configuration. Do NOT run any destructive Git commands (no commit, no push).
+
+Your goal is to build the `SmartLinkedInBuilder` component. This component solves a major student friction point by providing a pre-written, 1-tap copyable template for their daily LinkedIn post. You will integrate it smoothly into the Challenge Day page above the submission form.
+
+---
+
+### Step 1: Build the `SmartLinkedInBuilder.jsx` Component
+
+Create `src/components/challenge/SmartLinkedInBuilder.jsx`.
+
+* **Props:** `template` (string). If `template` is missing, return `null` (graceful fallback).
+* **State:** Use a local React state (e.g., `copyStatus` set to `"idle" | "copied" | "error"`) to manage UI feedback.
+* **Copy Logic (Native & Safe):**
+* Create an asynchronous `handleCopy` function.
+* **Graceful Fallback:** Check if `navigator.clipboard` exists. If not, set `copyStatus` to `"error"`.
+* Wrap `navigator.clipboard.writeText(template)` in a `try...catch` block.
+* On success, set `copyStatus` to `"copied"`. Use `setTimeout` to revert back to `"idle"` after 2000ms.
+* On catch/error, set `copyStatus` to `"error"`.
+
+
+* **UI Layout:**
+* Wrap everything in a `<Card>` or a container with `--border-subtle` and `--bg-surface-elevated`.
+* **Header:** A small icon (optional native SVG) and title (e.g., "Smart LinkedIn Template") using `--text-primary`. Add a subtext ("Copy and customize this for today's proof of work") using `--text-secondary`.
+* **Content Block:** Display the `template` string inside a well-padded `div` or `<pre>` tag that uses `whitespace-pre-wrap` so formatting is preserved. Give this inner block a slightly darker/lighter background for contrast.
+* **Action Area:** A secondary `Button` to copy the text.
+* If `"idle"`, show "Copy Template".
+* If `"copied"`, show "Copied! ✓" (with `--status-success` text/border if possible).
+* If `"error"`, show "Copy failed - Please select and copy manually" and ensure the user can manually highlight the text block.
+
+
+
+
+
+---
+
+### Step 2: Integrate into `ChallengeDayPage.jsx`
+
+Update `src/pages/ChallengeDayPage.jsx`.
+
+* Locate the layout section between the `TaskBrief` component and the `SubmissionForm` component.
+* Import and render the `<SmartLinkedInBuilder template="{challenge.linkedinTemplate}"/>` there.
+* Ensure there is proper vertical spacing (e.g., `gap-6` or `space-y-6`) so the flow from reading the brief, to copying the template, to submitting the form feels entirely natural.
+
+---
+
+### Step 3: Styling & Accessibility Checks
+
+* **390px Optimization:** Ensure the template text block breaks words correctly (`break-words` or `whitespace-pre-wrap`) so it never causes horizontal scrolling on mobile devices.
+* **Touch Targets:** The "Copy" button must be at least 44px tall.
+* **Theme Contrast:** The component must look native to the app in both Light and Dark modes. The text inside the template block should be easily readable, likely using `--text-secondary`.
+
+---
+
+### Step 4: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. Navigating to `/day/5` displays the Smart LinkedIn Builder between the brief and the form.
+3. Clicking "Copy Template" successfully copies the text to the clipboard and updates the button visually to "Copied! ✓" for 2 seconds before reverting.
+4. If the clipboard API fails, the UI does not crash, and the user receives a clear visual error state but can still manually copy the text.
+5. The layout remains fully constrained to 390px on mobile without horizontal overflow.
+6. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the created and modified files.
+2. Provide a concise summary containing:
+* **Files Created/Modified:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]
