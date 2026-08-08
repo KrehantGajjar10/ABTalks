@@ -1,1 +1,52 @@
 @import "tailwindcss";
+
+:root {
+  --bg-app: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --border-subtle: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --accent-primary: #4F46E5;
+  --accent-hover: #4338ca;
+  --status-success: #059669;
+  --status-warning: #D97706;
+  --status-error: #E11D48;
+  --focus-ring: #6366F1;
+}
+
+.dark {
+  --bg-app: #0F172A;
+  --bg-surface: #1E293B;
+  --bg-surface-elevated: #334155;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-subtle: #334155;
+  --border-strong: #475569;
+  --accent-primary: #6366F1;
+  --accent-hover: #818cf8;
+  --status-success: #10B981;
+  --status-warning: #F59E0B;
+  --status-error: #F43F5E;
+  --focus-ring: #6366F1;
+}
+
+@theme {
+  --color-bg-app: var(--bg-app);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-elevated: var(--bg-surface-elevated);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-hover: var(--accent-hover);
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-error: var(--status-error);
+  --color-focus-ring: var(--focus-ring);
+}
