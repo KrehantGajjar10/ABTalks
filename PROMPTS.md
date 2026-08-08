@@ -394,3 +394,117 @@ When completed:
 * **Files Created/Modified/Deleted:** [List files]
 * **Build Status:** [Pass / Fail]
 * **Git Status Output:** [Exact `git status` text]
+
+
+
+### Chapter 4: Dashboard Foundation & Progress Grid (`/dashboard`)
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 4: Dashboard Foundation & Progress Grid (`/dashboard`)**.
+**Strict Rules:** Do NOT build the final Challenge Day execution page (`/day/:dayId`). Do NOT install new dependencies (no charting libraries). Do NOT modify the Tailwind configuration. Do NOT run any destructive Git commands (no commit, no push).
+
+Your goal is to build the Dashboard page using the mock data from Chapter 2, construct a custom 60-day progress grid, and use the existing `Card`, `Badge`, and `Button` components. The grid must be interactive and highly accessible.
+
+---
+
+### Step 1: Component Structure & Mock Data Integration
+
+Create a new folder `src/components/dashboard/`.
+Update `src/pages/DashboardPage.jsx` to import the `user` and `challenges` array from `src/data/mockData.js`. Pass the necessary data down to the three new components you will create in the `dashboard` folder.
+
+---
+
+### Step 2: Build `StreakCard.jsx`
+
+* **Purpose:** Display the user's current standing.
+* **Content:** Show `user.currentStreak` as a massive, proud number. Show `user.bestStreak` as secondary text.
+* **Styling:** Wrap in the `Card` component. Use the `--status-success` (Emerald/Mint) token to make the current streak visually rewarding. Keep it compact but highly readable on a 390px screen.
+
+---
+
+### Step 3: Build `TodayTaskCard.jsx`
+
+* **Purpose:** Provide a frictionless CTA for today's action.
+* **Content:** Find the challenge object where `status === "pending"` (e.g., Day 5). Display the `day` number, `title`, and `description`.
+* **Action:** Add a primary `Button` ("Start Today's Challenge") wrapped in a React Router `<Link to="/day/5">`.
+* **Styling:** Use the `Card` component. Emphasize the primary CTA so it acts as the primary focal point of the dashboard.
+
+---
+
+### Step 4: Build `ProgressGrid.jsx` (Crucial Implementation)
+
+* **Layout:** A native CSS grid optimized for mobile. Use exactly 10 columns (`grid-cols-10`) so 60 days form a 10x6 block. Ensure `gap-1` or `gap-1.5` so it fits on a 390px screen without horizontal scrolling. Make cells perfectly square (`aspect-square`).
+* **Data Mapping:** Map through the 60 `challenges`.
+* **Cell Styling by Status:**
+* `completed`: Use `--status-success` background.
+* `missed`: Use a subtle warning/muted red or amber background.
+* `pending`: Use `--accent-primary` or a clearly outlined focus state.
+* `locked`: Use a muted `--bg-surface-elevated` background with `--border-subtle`.
+
+
+* **Interactivity & Routing:**
+* If `status` is NOT `"locked"`, wrap the cell in a `<Link to="{`/day/${challenge.day}`}">` from `react-router-dom`. Add an interactive hover state (`hover:scale-105` or similar native transition).
+* If `status` is `"locked"`, render it as a standard `div` or visually disabled element without hover effects. Do NOT wrap it in a Link.
+
+
+* **Accessibility:** Every cell MUST have a semantic label for screen readers. Add `aria-label={`Day ${challenge.day}:${challenge.status}`}` and an equivalent `title` attribute for native browser tooltips.
+
+---
+
+### Step 5: Compose the Dashboard Layout
+
+* **File:** Assemble everything in `src/pages/DashboardPage.jsx`.
+* **Mobile Layout (390px):** Stack the components in this exact hierarchy: `StreakCard` -> `TodayTaskCard` -> `ProgressGrid`. Ensure generous padding between sections (e.g., `gap-6` or `space-y-6`).
+* **Desktop Layout:** Allow the layout to expand gracefully (e.g., placing the `StreakCard` and `TodayTaskCard` in a left column, and a larger `ProgressGrid` in the right column, or a balanced multi-column grid) constrained by the `AppLayout` wrapper.
+
+---
+
+### Step 6: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. Navigating to `/dashboard` renders the complete layout cleanly on a 390px screen with NO horizontal overflow.
+3. The 10x6 Progress Grid fits perfectly on mobile, and non-locked cells successfully route to the `/day/:dayId` placeholder.
+4. Locked cells are visibly distinct and unclickable.
+5. Light and Dark modes render clearly, with all status colors highly visible against their respective backgrounds.
+6. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the created and modified files.
+2. Provide a concise summary containing:
+* **Files Created/Modified/Deleted:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]
+
+
+> **Chapter 4 Bug Fix — Mobile Progress Grid Day Numbers**
+>
+> I tested the Dashboard at 390px mobile width. Everything is working correctly except one visual bug:
+>
+> **Issue:** The numbers inside the 60-Day Journey grid cells become invisible / extremely low-contrast on mobile. The cells themselves are visible, but the day numbers (1–60) cannot be properly read.
+>
+> Please inspect `src/components/dashboard/ProgressGrid.jsx` and its responsive Tailwind classes.
+>
+> **Requirements:**
+>
+> * Fix ONLY the day-number visibility/contrast issue.
+> * Day numbers **1–60 must remain clearly readable at 390px mobile and desktop**.
+> * Maintain the existing status colors:
+>
+>   * Completed → Emerald
+>   * Missed → Rose/Red
+>   * Pending → Indigo outline
+>   * Locked → Slate
+> * Locked day numbers should still have enough contrast to be readable, while remaining visually muted.
+> * Do not change the existing grid structure, 10×6 layout, spacing, card design, or overall visual direction.
+> * Do not install dependencies.
+> * Do not modify the Tailwind configuration or global design tokens.
+>
+> After fixing:
+>
+> 1. Run `npm run build`.
+> 2. Verify `/dashboard` at 390px and desktop.
+> 3. Report exactly what was changed and the build result.
+> 4. Do NOT run Git commit/push.
+
+
