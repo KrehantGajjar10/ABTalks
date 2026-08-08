@@ -507,4 +507,99 @@ When completed:
 > 3. Report exactly what was changed and the build result.
 > 4. Do NOT run Git commit/push.
 
+### Chapter 5: Challenge Day & Submission Flow (`/day/:dayId`)
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 5: Challenge Day & Submission Flow (`/day/:dayId`)**.
+**Strict Rules:** Do NOT implement the "Smart LinkedIn Builder" (our Plus-One feature) yet. Do NOT install form validation libraries (use native HTML5 validation). Do NOT modify the Tailwind configuration. Do NOT run any destructive Git commands (no commit, no push).
+
+Your goal is to build the execution environment where the student reads today's task and submits their links. You will build a reusable `Input` component, upgrade the `ChallengeDayPage`, and implement a simulated submission form using local React state.
+
+---
+
+### Step 1: Build the `Input.jsx` Component
+
+Create `src/components/ui/Input.jsx`.
+
+* **Props:** `label`, `id`, `helperText`, plus standard input attributes (`type`, `required`, `placeholder`, `value`, `onChange`).
+* **Styling:**
+* Use `--bg-surface` or a slightly darker/lighter `--bg-app` for the input background to ensure contrast.
+* Must have a minimum height of **44px** for touch targets.
+* Include a highly visible focus state using `focus-visible:ring-2` mapped to our `--accent-primary` or `--focus-ring` token.
+* Ensure the text color (`--text-primary`) and placeholder text (`--text-muted`) contrast well in both Light and Dark modes.
+* If `label` is provided, render it cleanly above the input using `--text-secondary`.
+
+
+
+---
+
+### Step 2: Build `TaskBrief.jsx`
+
+Create `src/components/challenge/TaskBrief.jsx`.
+
+* **Purpose:** Display the read-only information about what needs to be built.
+* **Props:** `challenge` (object).
+* **Content:**
+* Display the `day` number and a `Badge` indicating the status (e.g., "Pending").
+* Display the `title` as a prominent H1 or H2.
+* Display the `description` text clearly with generous line height for readability (`leading-relaxed`).
+
+
+* **Styling:** Wrap this information inside a `Card` or a well-padded section.
+
+---
+
+### Step 3: Build `SubmissionForm.jsx`
+
+Create `src/components/challenge/SubmissionForm.jsx`.
+
+* **Purpose:** Allow the user to submit their GitHub and LinkedIn URLs.
+* **State:** Use local React `useState` to track `isSubmitted` (boolean, default `false`).
+* **Form Implementation:**
+* Create a `<form>` element with an `onSubmit` handler that prevents default and sets `isSubmitted` to `true`.
+* Use the new `Input` component for "GitHub Repository URL" and "LinkedIn Post URL". Set `type="url"` and `required` on both to leverage native HTML5 browser validation.
+* Add a massive, thumb-friendly primary `Button` ("Submit Proof of Work") at the bottom.
+
+
+* **Success State:**
+* If `isSubmitted` is `true`, do NOT render the inputs. Instead, render a highly satisfying success state (e.g., a green checkmark icon, "Proof Submitted Successfully!", and a secondary `Button` to "Return to Dashboard").
+
+
+* **Styling:** Wrap the form (and success state) in a `Card`.
+
+---
+
+### Step 4: Upgrade `ChallengeDayPage.jsx`
+
+Update `src/pages/ChallengeDayPage.jsx`.
+
+* **Data Fetching:** Use `useParams` to get `dayId`. Convert it to a number and find the matching challenge in the `challenges` array from `mockData.js`.
+* **Fallback:** If the challenge doesn't exist (e.g., `/day/999`), render a clean fallback UI ("Challenge not found") with a `Button` to return to the Dashboard.
+* **Layout Assembly (Mobile First):**
+* Top: A simple "← Back to Dashboard" link using React Router `<Link>`.
+* Middle: Render the `TaskBrief` component passing the challenge data.
+* Bottom: Render the `SubmissionForm` component.
+* Ensure generous spacing (`gap-6` or `space-y-6`) between elements. Constrain the maximum width on desktop so the inputs don't stretch across the entire monitor.
+
+
+
+---
+
+### Step 5: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. Navigating from the Dashboard to `/day/5` renders the Task Brief and Submission Form.
+3. The inputs are at least 44px tall and visible in both Light and Dark modes.
+4. Clicking "Submit" with empty or invalid URLs triggers the browser's native HTML5 validation UI.
+5. Clicking "Submit" with valid URLs instantly swaps the form to the satisfying Success State.
+6. The layout fits perfectly on a 390px mobile screen with no horizontal scrolling.
+7. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the created and modified files.
+2. Provide a concise summary containing:
+* **Files Created/Modified:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]
 
