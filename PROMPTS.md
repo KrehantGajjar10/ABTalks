@@ -638,10 +638,6 @@ Create `src/components/challenge/SmartLinkedInBuilder.jsx`.
 * If `"copied"`, show "Copied! ✓" (with `--status-success` text/border if possible).
 * If `"error"`, show "Copy failed - Please select and copy manually" and ensure the user can manually highlight the text block.
 
-
-
-
-
 ---
 
 ### Step 2: Integrate into `ChallengeDayPage.jsx`
@@ -670,6 +666,103 @@ Update `src/pages/ChallengeDayPage.jsx`.
 4. If the clipboard API fails, the UI does not crash, and the user receives a clear visual error state but can still manually copy the text.
 5. The layout remains fully constrained to 390px on mobile without horizontal overflow.
 6. Running `npm run build` succeeds with zero errors.
+
+When completed:
+
+1. Run `git status` so the user can review the created and modified files.
+2. Provide a concise summary containing:
+* **Files Created/Modified:** [List files]
+* **Build Status:** [Pass / Fail]
+* **Git Status Output:** [Exact `git status` text]
+
+
+
+### Chapter 7: Edge Cases & Empty States
+
+**Context & Goal:**
+You are the implementation agent for the ABTalks redesign project. We are executing **Chapter 7: Edge Cases & Empty States**.
+**Strict Rules:** Do NOT install any new dependencies. Do NOT modify the Tailwind configuration. Do NOT run any destructive Git commands (no commit, no push).
+
+Your goal is to gracefully handle the hackathon's required edge cases: First Day (Empty Profile), Missed Day, and Completed Task. To make this easily verifiable for the judges, you will build a "Demo State Switcher" that allows toggling the mock data between these specific scenarios directly from the Dashboard.
+
+---
+
+### Step 1: Upgrade `mockData.js` for Scenarios
+
+Update `src/data/mockData.js`. Instead of exporting a single static object, export a function `getMockState(scenario)` that returns a `{ user, challenges }` object based on the requested scenario.
+Define 4 scenarios:
+
+1. **`first-day`**:
+* `user`: `currentStreak: 0`, `bestStreak: 0`, `status: "first-day"`.
+* `challenges`: Day 1 is `"pending"`, all others are `"locked"`.
+
+
+2. **`active-pending`** (The default we've been using):
+* `user`: `currentStreak: 4`, `bestStreak: 12`, `status: "active"`.
+* `challenges`: Days 1-4 are `"completed"`, Day 5 is `"pending"`, rest are `"locked"`.
+
+
+3. **`active-completed`**:
+* `user`: `currentStreak: 5`, `bestStreak: 12`, `status: "active"`.
+* `challenges`: Days 1-5 are `"completed"`, rest are `"locked"`.
+
+
+4. **`missed-day`**:
+* `user`: `currentStreak: 0`, `bestStreak: 12`, `status: "missed"`.
+* `challenges`: Days 1-3 `"completed"`, Day 4 `"missed"`, Day 5 `"pending"`, rest `"locked"`.
+
+
+
+---
+
+### Step 2: Build `StateSwitcher.jsx` (Judge Tools)
+
+Create `src/components/dev/StateSwitcher.jsx`.
+
+* **Purpose:** A development/judging tool to toggle the mock data scenarios.
+* **Props:** `currentScenario` (string), `onScenarioChange` (function).
+* **UI Layout:** Wrap it in a container with a dashed border (`border-dashed --border-strong`) and a clear label "🛠 Judge Tools: Toggle Scenario" so it is obviously not a core product feature.
+* **Controls:** Render small ghost or outline buttons for the 4 scenarios (`First Day`, `Active`, `Completed`, `Missed Day`). Highlight the active scenario button.
+* **Styling:** Ensure it is scrollable horizontally or wraps cleanly on a 390px mobile screen so it doesn't break the layout.
+
+---
+
+### Step 3: Update Dashboard UI Components for Edge Cases
+
+1. **`StreakCard.jsx`**:
+* If `user.status === "first-day"`, hide the "Best Streak" and show a welcoming message: "Day 1 Starts Now! Begin your 60-day journey." Use standard `--text-primary`.
+* If `user.status === "missed"`, show the 0 streak, but add an empathetic message: "Rest is important. Let's bounce back today." Map the visual accents to `--status-warning` (Amber) instead of the usual Emerald.
+* Otherwise, show the standard active streak UI.
+
+
+2. **`TodayTaskCard.jsx`**:
+* Determine "Today's Task" by finding the first `"pending"` challenge. If none are pending, find the most recently `"completed"` challenge.
+* If the task is `"pending"`, show the standard "Start Today's Challenge" primary CTA linking to the day.
+* If the task is `"completed"` (meaning the `active-completed` scenario is active), replace the CTA button with a read-only, satisfying success indicator (e.g., a non-clickable `<div className="flex items-center text-(--status-success)">✓ Completed for today</div>`).
+
+
+
+---
+
+### Step 4: Wire it up in `DashboardPage.jsx`
+
+1. Import `useState` and `getMockState`.
+2. Set up local state: `const [scenario, setScenario] = useState("active-pending");`
+3. Derive the data: `const { user, challenges } = getMockState(scenario);`
+4. Pass `user` to `StreakCard`. Pass `challenges` to `TodayTaskCard` and `ProgressGrid`.
+5. Render `<StateSwitcher currentScenario="{scenario}" onScenarioChange="{setScenario}"/>` at the very bottom of the Dashboard page layout, separated by generous padding (`mt-12`).
+
+---
+
+### Step 5: Acceptance Criteria & Output
+
+1. Running `npm run dev` serves the app without errors.
+2. The Dashboard loads the `active-pending` state by default.
+3. Clicking the Judge Tools toggle successfully swaps the UI between First Day, Active, Completed, and Missed Day scenarios instantly.
+4. The Missed Day streak card looks empathetic and utilizes warning (Amber) colors properly in both Light and Dark modes.
+5. The Completed scenario correctly changes the task card's CTA to a read-only success state.
+6. The layout fits perfectly on a 390px mobile screen with no horizontal scrolling.
+7. Running `npm run build` succeeds with zero errors.
 
 When completed:
 

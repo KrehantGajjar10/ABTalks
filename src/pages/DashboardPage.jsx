@@ -1,14 +1,16 @@
-import { mockData } from '../data/mockData';
+import { useState } from 'react';
+import { getMockState } from '../data/mockData';
 import { StreakCard } from '../components/dashboard/StreakCard';
 import { TodayTaskCard } from '../components/dashboard/TodayTaskCard';
 import { ProgressGrid } from '../components/dashboard/ProgressGrid';
+import { StateSwitcher } from '../components/dev/StateSwitcher';
 
 export default function DashboardPage() {
-  const { user, challenges } = mockData;
-  const pendingChallenge = challenges.find(c => c.status === 'pending');
+  const [scenario, setScenario] = useState('active-pending');
+  const { user, challenges } = getMockState(scenario);
 
   return (
-    <div className="py-6 px-4 md:py-10 w-full">
+    <div className="py-6 px-4 md:py-10 w-full max-w-5xl mx-auto">
       <header className="mb-8">
         <h1 className="text-3xl font-extrabold text-text-primary tracking-tight">
           Welcome back, {user.name.split(' ')[0]}
@@ -23,7 +25,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-4 flex flex-col gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 h-full">
             <StreakCard user={user} />
-            <TodayTaskCard pendingChallenge={pendingChallenge} />
+            <TodayTaskCard challenges={challenges} />
           </div>
         </div>
 
@@ -32,6 +34,8 @@ export default function DashboardPage() {
           <ProgressGrid challenges={challenges} />
         </div>
       </div>
+      
+      <StateSwitcher currentScenario={scenario} onScenarioChange={setScenario} />
     </div>
   );
 }
